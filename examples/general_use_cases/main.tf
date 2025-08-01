@@ -1,27 +1,3 @@
-# GCP Passthrough Internal Load Balancer (ILB) Module
-
-This Terraform module provisions a Google Cloud Platform (GCP) Regional Passthrough Internal Load Balancer (Internal TCP/UDP Load Balancer). It includes the necessary health check, regional backend service, and forwarding rule.
-
-## Features
-
-*   Supports TCP and UDP protocols.
-*   Configurable health checks.
-*   Supports existing Instance Groups as backends.
-*   Option to allocate a static internal IP address.
-*   Customizable port range for the frontend.
-
-## Usage Example
-
-To use this module, include it in your root Terraform configuration (`main.tf`) and provide the required input variables.
-
-**Before you begin:**
-
-*   Ensure you have a VPC network and a subnetwork created where you want to deploy the ILB and its backends.
-*   Ensure you have existing Instance Groups (Managed Instance Groups or Unmanaged Instance Groups) that will serve as backends for the ILB.
-
-```terraform
-# main.tf in your root configuration
-
 # Configure the Google Cloud provider
 provider "google" {
   project = var.gcp_project_id
