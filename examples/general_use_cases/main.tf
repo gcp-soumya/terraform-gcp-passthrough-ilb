@@ -26,7 +26,7 @@ data "google_compute_instance_group" "example_instance_group" {
 }
 
 module "app_ilb" {
-  source = "./modules/gcp-passthrough-ilb" # Path to your local module
+  source = "github.com/gcp-soumya/terraform-gcp-passthrough-ilb.git//?ref=master" # Path to your local module
 
   project_id   = var.gcp_project_id
   region       = var.gcp_region

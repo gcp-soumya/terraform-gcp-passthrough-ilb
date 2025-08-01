@@ -12,12 +12,12 @@ resource "google_compute_health_check" "ilb_health_check" {
     }
   }
 
-  dynamic "udp_health_check" {
-    for_each = var.protocol == "UDP" ? [1] : []
-    content {
-      port = var.health_check_port
-    }
-  }
+  # dynamic "udp_health_check" {
+  #   for_each = var.protocol == "UDP" ? [1] : []
+  #   content {
+  #     port = var.health_check_port
+  #   }
+  # }
 
   check_interval_sec  = var.health_check_interval_sec
   timeout_sec         = var.health_check_timeout_sec
