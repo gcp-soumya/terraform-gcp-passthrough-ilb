@@ -1,8 +1,9 @@
 
 # 1. Health Check
-resource "google_compute_health_check" "ilb_health_check" {
+resource "google_compute_region_health_check" "ilb_health_check" {
   project = var.project_id
   name    = "${var.ilb_name}-hc"
+  region  = var.region
 
   # Health check type based on protocol
   dynamic "tcp_health_check" {
@@ -34,7 +35,7 @@ resource "google_compute_region_backend_service" "ilb_backend_service" {
   protocol    = var.protocol
   load_balancing_scheme = "INTERNAL_MANAGED" # For internal passthrough ILB
 
-  health_checks = [google_compute_health_check.ilb_health_check.id]
+  health_checks = [google_compute_region_health_check.ilb_health_check.id]
 
   # Add backends (instance groups or NEGs)
   dynamic "backend" {
