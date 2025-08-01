@@ -27,5 +27,5 @@ output "ilb_backend_service_self_link" {
 
 output "ilb_health_check_name" {
   description = "The name of the ILB health check."
-  value       = google_compute_health_check.ilb_health_check.name
+  value       = google_compute_region_health_check.ilb_health_check.name
 }
