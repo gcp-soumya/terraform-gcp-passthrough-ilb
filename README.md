@@ -85,3 +85,44 @@ output "ilb_backend_service_url" {
   description = "The self_link of the ILB backend service."
   value       = module.app_ilb.ilb_backend_service_self_link
 }
+
+# Inputs
+
+Name	Description	Type	Default	Required
+  project_id	The GCP project ID where the ILB will be created.	string	n/a	yes
+  region	The GCP region where the ILB will be deployed.	string	n/a	yes
+  ilb_name	The name for the Internal Load Balancer resources (e.g., 'my-app-ilb').	string	n/a	yes
+  protocol	The protocol for the ILB. Can be 'TCP' or 'UDP'.	string	"TCP"	no
+  network_self_link	The self_link of the VPC network where the ILB will be deployed. e.g., projects/PROJECT_ID/global/networks/NETWORK_NAME.	string	n/a	yes
+  subnetwork_self_link	The self_link of the subnetwork where the ILB will be deployed. e.g., projects/PROJECT_ID/regions/REGION/subnetworks/SUBNETWORK_NAME.	string	n/a	yes
+  backend_instance_groups	A list of self_links of the instance groups that will serve as backends for the ILB. (e.g., projects/PROJECT_ID/zones/ZONE/instanceGroups/INSTANCE_GROUP_NAME).	list(string)	[]	no
+  port_range	The port range (e.g., '80-80' or '80') that the ILB will listen on. Required for Internal Passthrough Network Load Balancers.	string	n/a	yes
+  allocate_static_ip	Set to true to allocate a static internal IP address for the ILB.	bool	true	no
+  static_ip_address	The static internal IP address to assign to the ILB. Required if allocate_static_ip is true. Must be within the specified subnetwork's IP range.	string	null	no
+  health_check_port	The port for the health check. Can be the service port or a dedicated health check port.	number	80	no
+  health_check_interval_sec	How often (in seconds) to send a health check request.	number	5	no
+  health_check_timeout_sec	How long (in seconds) to wait for a response to a health check request.	number	5	no
+  health_check_healthy_threshold	Number of consecutive successful health checks before considering an instance healthy.	number	2	no
+  health_check_unhealthy_threshold	Number of consecutive failed health checks before considering an instance unhealthy.	number	2	no
+  connection_draining_timeout_sec	Time (in seconds) to wait for connections to drain from a backend instance when it is removed.	number	0	no
+  labels	A map of key/value labels to assign to the ILB resources.	map(string)	{}	no
+
+# Outputs 
+
+Name	Description
+  ilb_forwarding_rule_name	The name of the ILB forwarding rule.
+  ilb_forwarding_rule_self_link	The self_link of the ILB forwarding rule.
+  ilb_ip_address	The IP address of the ILB forwarding rule.
+  ilb_backend_service_name	The name of the ILB backend service.
+  ilb_backend_service_self_link	The self_link of the ILB backend service.
+  ilb_health_check_name	The name of the ILB health check.
+
+# Requirements
+
+  This module requires the Google Cloud provider configured with appropriate authentication. Ensure the service account or user running Terraform has the necessary permissions to create and manage:
+
+  Compute Health Checks (compute.healthChecks.*)
+  Compute Backend Services (compute.backendServices.*)
+  Compute Forwarding Rules (compute.forwardingRules.*)
+  Compute Addresses (compute.addresses.*)
+  Access to read Network and Subnetwork information (compute.networks.get, compute.subnetworks.get)
