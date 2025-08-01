@@ -86,9 +86,11 @@ output "ilb_backend_service_url" {
   value       = module.app_ilb.ilb_backend_service_self_link
 }
 
+```
+
 # Inputs
 
-Name	Description	Type	Default	Required
+|   Name	|   Description   |   Type   |   Default   |   Required|
   project_id	The GCP project ID where the ILB will be created.	string	n/a	yes
   region	The GCP region where the ILB will be deployed.	string	n/a	yes
   ilb_name	The name for the Internal Load Balancer resources (e.g., 'my-app-ilb').	string	n/a	yes
